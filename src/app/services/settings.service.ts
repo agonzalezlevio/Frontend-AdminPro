@@ -17,7 +17,6 @@ export class SettingsService {
    }
 
   public setAjustes() {
-    console.log('Guardado en localstorage');
     localStorage.setItem('ajustes', JSON.stringify(this.ajustes));
   }
 
