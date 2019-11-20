@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SettingsService } from './services/settings.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'AdminPro';
+
+  // Se inyecta el servicio de temas al inicio de la aplicación
+  constructor(public settingsService: SettingsService) {
+  }
+
 }
