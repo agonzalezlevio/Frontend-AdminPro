@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import swal from 'sweetalert';
+import { UsuarioService } from '../services/usuario.service';
+import { Usuario } from '../models/usuario.model';
+import { Router } from '@angular/router';
 
 declare function init_plugins();
+
+
 
 @Component({
   selector: 'app-register',
@@ -14,7 +19,7 @@ export class RegisterComponent implements OnInit {
   public forma: FormGroup;
 
 
-  constructor() { }
+  constructor(public usuarioService: UsuarioService, private router: Router) { }
 
   ngOnInit() {
     init_plugins();
@@ -30,13 +35,13 @@ export class RegisterComponent implements OnInit {
       { validators: this.esIgual('password', 'password2') }
       );
 
-    this.forma.setValue({
+    /* this.forma.setValue({
         nombre: 'Test',
         correo: 'test@email.cl',
         password: '123456',
         password2: '123456',
         condiciones: true
-      });
+      }); */
 
   }
 
@@ -69,6 +74,13 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    const usuario = new Usuario(
+      this.forma.value.nombre,
+      this.forma.value.correo,
+      this.forma.value.password
+    );
+
+    this.usuarioService.crearUsuario(usuario).subscribe(respuestaUsuario => this.router.navigate(['/login']));
   }
 
 }
