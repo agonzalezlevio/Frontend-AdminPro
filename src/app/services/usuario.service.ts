@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../config/config';
 import { map } from 'rxjs/internal/operators/map';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -14,7 +15,34 @@ export class UsuarioService {
   public usuario: Usuario;
   public token: string;
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public router: Router) {
+    // console.log('Servicio de usuario listo');
+    this.cargarStorage();
+  }
+
+  public loginGoogle(token: string) {
+    const URL = URL_SERVICIOS + '/login/google';
+
+    return this.http.post(URL, { token }).pipe(map((respuesta: any) => {
+      this.guardarStorage(respuesta.id, respuesta.token, respuesta.usuario);
+
+      return true;
+    }));
+  }
+
+  public estaLogeado() {
+      return ( this.token.length > 5);
+  }
+
+  public cargarStorage() {
+    if (localStorage.getItem('token')) {
+      this.token = localStorage.getItem('token');
+      this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    } else {
+      this.token = '';
+      this.usuario = null;
+    }
+  }
 
 
   public guardarStorage(id: string, token: string, usuario: Usuario) {
@@ -26,6 +54,15 @@ export class UsuarioService {
     this.usuario = usuario;
     this.token = token;
 
+  }
+
+
+  public logout() {
+    this.usuario = null;
+    this.token = '';
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/login']);
   }
 
 
