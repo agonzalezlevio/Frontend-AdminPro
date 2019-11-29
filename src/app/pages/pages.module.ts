@@ -12,6 +12,10 @@ import { PAGE_ROUTES } from './pages.routes';
 // ng2-charts
 import { ChartsModule } from 'ng2-charts';
 
+// Componentes
+import { ProfileComponent } from './profile/profile.component';
+import { CommonModule } from '@angular/common';
+
 // Temporal
 import { IncrementadorComponent } from '../components/incrementador/incrementador.component';
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
@@ -26,6 +30,7 @@ import { PipesModule } from '../pipes/pipes.module';
 
 
 
+
 @NgModule({
     declarations: [
         DashboardComponent,
@@ -33,7 +38,9 @@ import { PipesModule } from '../pipes/pipes.module';
         PagesComponent,
         Graficas1Component,
         IncrementadorComponent, // temporal
-        GraficoDonaComponent, AccountSettingsComponent, PromesasComponent, RxjsComponent
+        GraficoDonaComponent, AccountSettingsComponent, PromesasComponent,
+        RxjsComponent,
+        ProfileComponent
     ],
     exports: [
         DashboardComponent,
@@ -46,7 +53,8 @@ import { PipesModule } from '../pipes/pipes.module';
         PAGE_ROUTES,
         FormsModule,
         ChartsModule,
-        PipesModule
+        PipesModule,
+        CommonModule
     ]
 })
 export class PagesModule { }

@@ -7,6 +7,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { LoginGuard } from '../services/guards/login-guard.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const pageRoutes: Routes = [
     {
@@ -18,6 +19,7 @@ const pageRoutes: Routes = [
           { path: 'progress', component: ProgressComponent , data: {titulo: 'Progress'} },
           { path: 'graficas1', component: Graficas1Component, data: {titulo: 'Gráficas'}  },
           { path: 'account-setting', component: AccountSettingsComponent , data: {titulo: 'Ajustes de usuario'} },
+          { path: 'perfil', component: ProfileComponent , data: {titulo: 'Perfil de usuario'} },
           { path: 'promesas', component: PromesasComponent, data: {titulo: 'Promesas Vanila JS'}  },
           { path: 'rxjs', component: RxjsComponent, data: {titulo: 'RxJS'}  },
           { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
