@@ -6,27 +6,34 @@ import { URL_SERVICIOS } from '../config/config';
 })
 export class ImagenPipe implements PipeTransform {
 
-  transform(img: string, tipo: string = 'usuario'): any {
+  transform(img: string, tipo: string = 'usuarios'): any {
 
-    const URL = URL_SERVICIOS + '/img';
+    const URL = URL_SERVICIOS + '/img/';
+
+    let URL_IMAGEN: string;
 
     if (!img) {
-      return URL + '/usuarios/noimage';
+      return URL_IMAGEN = URL + '/usuarios/noimage';
     }
     if (img.indexOf('https') >= 0) {
-      return img;
+     return URL_IMAGEN = img;
     }
     switch (tipo) {
       case 'usuarios':
-        return URL + '/usuarios/' + img;
+        URL_IMAGEN = URL + 'usuarios/' + img;
+        break;
       case 'medicos':
-        return URL + '/usuarios/' + img;
+        URL_IMAGEN = URL + 'medicos/' + img;
+        break;
       case 'hospitales':
-        return URL + '/hospitales/' + img;
+        URL_IMAGEN = URL + 'hospitales/' + img;
+        break;
       default:
-        console.log('El Tipo de imagen no existe');
-        return URL + 'usuarios/noimage';
+        URL_IMAGEN = URL + 'usuarios/noimage';
+        // console.log('El Tipo de imagen no existe', img);
+        break;
     }
+    return URL_IMAGEN;
   }
 
 }
