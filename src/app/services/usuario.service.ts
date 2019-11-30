@@ -17,7 +17,6 @@ export class UsuarioService {
   public token: string;
 
   constructor(public http: HttpClient, public router: Router, public subirArchivoService: SubirArchivoService) {
-    // console.log('Servicio de usuario listo');
     this.cargarStorage();
   }
 
@@ -45,6 +44,11 @@ export class UsuarioService {
     }
   }
 
+  public actualizarStorage(id: string, img: string) {
+    // Actualizar información storage
+    this.usuario.img = img;
+    this.guardarStorage(id, this.token, this.usuario);
+  }
 
   public guardarStorage(id: string, token: string, usuario: Usuario) {
     localStorage.setItem('id', id);
@@ -54,7 +58,6 @@ export class UsuarioService {
 
     this.usuario = usuario;
     this.token = token;
-
   }
 
 
@@ -99,15 +102,19 @@ export class UsuarioService {
     }));
   }
 
-  public actulizarUsuario(usuario: Usuario) {
+  public actualizarUsuario(usuario: Usuario) {
 
     let URL = URL_SERVICIOS + '/usuario/' + this.usuario._id;
     URL += `?token=${this.token}`;
 
     return this.http.put(URL, usuario).pipe(map( (respuesta: any) => {
 
-      // Actulizar información storage
-      this.guardarStorage(respuesta._id, this.token, respuesta.usuario);
+      // Si el usuario modificado es igual al que inicio sesión
+      if (usuario._id === this.usuario._id) {
+          // Actualizar información storage
+          this.guardarStorage(respuesta._id, this.token, respuesta.usuario);
+      }
+
       // Notificación cambio exitoso
       Swal.fire({
         title: 'Usuario actualizado',
@@ -122,11 +129,13 @@ export class UsuarioService {
   }
 
 
+
+
   public cambiarImagen(archivo: File, id: string) {
     this.subirArchivoService.subirArchivo(archivo, 'usuarios', id).subscribe( (respuesta: any) => {
       this.usuario.img = respuesta.usuario.img;
 
-      // Actulizar información storage
+      // Actualizar información storage
       this.guardarStorage(id, this.token, this.usuario);
 
        // Notificación cambio exitoso
@@ -139,4 +148,32 @@ export class UsuarioService {
     });
   }
 
+
+  public cargarUsuarios(desde: number = 0) {
+    const URL = URL_SERVICIOS + '/usuario?desde=' + desde;
+    return this.http.get(URL);
+  }
+
+
+  public buscarUsuarios(termino: string) {
+    const URL = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + termino;
+    return this.http.get(URL).pipe(map((respuesta: any) => respuesta.usuarios));
+  }
+
+
+  public borrarUsuarios(id: string) {
+    let URL = URL_SERVICIOS + '/usuario/' + id;
+    URL += `?token=${this.token}`;
+
+    return this.http.delete(URL).pipe(map((respuesta: any) => {
+
+      Swal.fire(
+        '¡Borrado!',
+        `El usuario ${respuesta.usuario.nombre} ha sido eliminado.`,
+        'success'
+      );
+      return true;
+
+    }));
+  }
 }

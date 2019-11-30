@@ -8,6 +8,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { LoginGuard } from '../services/guards/login-guard.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const pageRoutes: Routes = [
     {
@@ -23,6 +24,9 @@ const pageRoutes: Routes = [
           { path: 'promesas', component: PromesasComponent, data: {titulo: 'Promesas Vanila JS'}  },
           { path: 'rxjs', component: RxjsComponent, data: {titulo: 'RxJS'}  },
           { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
+          // Mantenimientos
+          { path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Mantenimiento de usuarios'}  },
+
         ]
       }
 ];

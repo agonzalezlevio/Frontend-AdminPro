@@ -58,7 +58,7 @@ export class ProfileComponent implements OnInit {
     if (!this.usuario.google) {
       this.usuario.email = usuario.email;
     }
-    this.usuarioService.actulizarUsuario(this.usuario).subscribe();
+    this.usuarioService.actualizarUsuario(this.usuario).subscribe();
 
   }
 
