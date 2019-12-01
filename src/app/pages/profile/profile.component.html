@@ -56,7 +56,7 @@
                 <h4 class="card-title">Fotografía del usuario</h4>
                 <div class="card-body text-center">
                         <div class="m-t-30"> 
-                            <img *ngIf="!imagenTemporal" [src]="usuario.img | imagen" class="img-fluid img-thumbnail" width="150">
+                            <img *ngIf="!imagenTemporal" [src]="(usuario.img | imagen)" class="img-fluid img-thumbnail" width="150">
                             <img  *ngIf="imagenTemporal" [src]="imagenTemporal" class="img-fluid img-thumbnail"  width="150">
                         </div>
                     </div>

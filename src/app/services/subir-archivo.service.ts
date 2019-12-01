@@ -12,7 +12,6 @@ export class SubirArchivoService {
 
   public subirArchivo(archivo: File, tipo: string, id: string) {
     const url = URL_SERVICIOS + '/upload/' + tipo + '/' + id;
-
     const formData: FormData = new FormData();
 
     formData.append('imagen', archivo, archivo.name);

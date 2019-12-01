@@ -27,3 +27,13 @@
 .pointer {
     cursor: pointer;
 }
+
+.circle {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
