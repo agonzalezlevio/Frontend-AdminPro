@@ -7,13 +7,13 @@
                     <label for=""></label>
                     <input 
                     #input 
-                    (keyup.enter)="buscarHospital(input.value)" 
+                    (keyup.enter)="buscarMedico(input.value)" 
                     
                     type="text" 
                     class="form-control" 
                     name=""
                     aria-describedby="helpId" 
-                    placeholder="Buscar hospitales">
+                    placeholder="Buscar médicos">
                     <small  class="form-text text-muted">Presione enter para la búsqueda</small>
                 </div>
                 
@@ -21,6 +21,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="row animated fadeIn" *ngIf="cargando">
     <div class="col-sm-12">
@@ -40,15 +41,16 @@
             <div class="card-body">
 
                 <div class="float-left">
-                        <h3 class="card-title">Hospitales registrados (<small>{{totalRegistros}}</small>)</h3>
+                        <h3 class="card-title">Médicos registrados (<small>{{totalRegistros}}</small>)</h3>
                 </div>
                 <div class="float-right">
                     <button 
-                    (click)="crearHospital()"
+                    [routerLink]="['/medico','nuevo']"
+
                     type="button" 
                     class="btn btn-primary">
                         <i class="fa fa-plus"></i>
-                        Crear Hospital
+                        Crear Médico
                     </button>
                 </div>
                 
@@ -56,43 +58,43 @@
                     <table class="table color-bordered-table inverse-bordered-table">
                         <thead>
                             <tr>
-                                <th>Imagen</th>
-                                <th>Nombre</th>
+                                <th>Foto</th>
+                                <th>Médico</th>
+                                <th>Hospital</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let hospital of hospitales">
+                            <tr *ngFor="let medico of medicos">
+
                                 <td>
                                     <img 
-                                    (click)="mostrarModal(hospital._id)"
-                                    [src]="(hospital.img | imagen:'hospitales')" 
+                                    (click)="mostrarModal(medico._id)"
+                                    [src]="(medico.img | imagen:'medicos')" 
                                     
                                     class="img-50 pointer">
                                 </td>
+
                                 <td>
-                                    <div class="form-group">
-                                        <input 
-                                        [(ngModel)]="hospital.nombre" 
-                                        
-                                        type="text" 
-                                        class="form-control" 
-                                       >
-                                        <small id="helpId" class="form-text text-muted">Nombre del Hospital</small>
-                                    </div>
+                                    {{medico.nombre}}
                                 </td>
+
+                                <td>
+                                    {{medico['hospital'].nombre}}
+                                </td>
+
                                 <td class="text-nowrap">
-                                    <!-- Guardar hospital y cambios -->
+                                    <!-- Actualizar médico -->
                                     <button 
-                                    (click)="guardarhospital(hospital)" 
+                                    [routerLink]="['/medico', medico._id]" 
                                     
                                     type="button"
                                     class="btn btn-primary mr-2">
-                                        <i class="fa fa-save"></i>
+                                        <i class="fa fa-edit"></i>
                                     </button>
-                                    <!-- Borrar hospital -->
+                                    <!-- Borrar médico -->
                                     <button 
-                                    (click)="borrarHospital(hospital)" 
+                                    (click)="borrarMedico(medico)" 
                                     
                                     type="button" 
                                     class="btn btn-danger ">

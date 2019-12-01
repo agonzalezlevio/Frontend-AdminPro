@@ -1,0 +1,82 @@
+<div class="row animated fadeIn">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Médico: {{medico.nombre}} </h4>
+                <form 
+                #f="ngForm"
+                ngNativeValidate 
+                (ngSubmit)="guardarMedico(f)" 
+
+                class="form p-t-20">
+                    <div class="form-group">
+                        <label>Nombre del médico</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                            <input 
+                            [(ngModel)]="medico.nombre"                        
+                            name="nombre"
+
+                            type="text" 
+                            class="form-control"  
+                            placeholder="Nombre" 
+                            required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Hospital</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-hospital-o"></i></div>
+                            <select 
+                            [(ngModel)]="medico.hospital" 
+                            name="hospital"
+                            (change)="cambiohospital($event.target.value)"
+
+                            class="form-control custom-select" 
+                            required>
+                                <option  disabled value="">Seleccione Hospital</option>
+                                <option *ngFor="let hospital of hospitales" [value]="hospital._id">{{hospital.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary waves-effect waves-light m-r-10"> 
+                        <i class="fa fa-save"></i> 
+                        Guardar
+                    </button>
+                    <button  routerLink='/medicos' type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                    <h4 class="card-title">Hospital </h4>
+
+                    <img [src]="hospital.img | imagen:'hospitales'" class="rounded img-fluid" width="150">
+                    <h4 class="card-title m-t-10">{{hospital.nombre}}</h4>
+                    <h4 *ngIf="hospital.nombre===''" class="card-title m-t-10">Nombre Hospital</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3" *ngIf="medico._id" >
+            <div class="card">
+                <div class="card-body text-center">
+        <h4 class="card-title">Fotografía </h4>
+        <img 
+        (click)="cambiarFoto()"
+        [src]="medico.img | imagen:'medicos'" 
+
+        class="rounded img-fluid pointer" 
+        width="150">
+        <h4 class="card-title m-t-10">{{medico.nombre}}</h4>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+

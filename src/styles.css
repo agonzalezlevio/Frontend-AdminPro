@@ -30,8 +30,8 @@
 
 .circle {
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 100px;
+    width: 100px;
     overflow: hidden;
     display: flex;
     justify-content: center;
