@@ -1,0 +1,130 @@
+<div class="row animated fadeIn" *ngIf="cargando">
+        <div class="col-sm-12">
+            <div class="alert alert-warning text-center">
+                <strong>Cargando</strong>
+                <br>
+                <i class="fa fa-refresh fa-spin fa-5x" aria-hidden="true"></i>
+                <br>
+                <span>Espere por favor</span>
+            </div>
+        </div>
+    </div>
+
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Usuarios</h4>
+                <table class="table" *ngIf="usuarios.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let usuario of usuarios">
+                                <td>
+                                    <img [src]="usuario.img | imagen" class="img-fluid img-50" [alt]="usuario._id">
+                                </td>
+                                <td>{{usuario.nombre}}</td>
+                                <td>
+                                    <button type="button" 
+                                    routerLink='/usuarios'
+
+                                    class="btn btn-primary">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Si no hay usuarios -->
+                    <div class="alert alert-dark text-center" *ngIf="usuarios.length === 0">
+                            <span>No hay registros</span>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Hospitales</h4>
+                <table class="table" *ngIf="hospitales.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let hospital of hospitales">
+                                <td>
+                                    <img [src]="hospital.img | imagen:'hospitales'" class="img-fluid img-50" [alt]="hospital._id">
+                                </td>
+                                <td>{{hospital.nombre}}</td>
+                                <td>
+                                    <button 
+                                    routerLink='/hospitales'
+                                    
+                                    type="button" 
+                                    class="btn btn-primary">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                </table>
+                <!-- Si no hay hospitales -->
+                <div class="alert alert-dark text-center" *ngIf="hospitales.length === 0">
+                        <span>No hay registros</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Médicos</h4>
+                <table class="table" *ngIf="medicos.length > 0" >
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let medico of medicos">
+                                <td>
+                                    <img [src]="medico.img | imagen:'medicos'" class="img-fluid img-50 img-50" [alt]="medico._id">
+                                </td>
+                                <td>{{medico.nombre}}</td>
+                                <td>
+                                    <button 
+                                    [routerLink]="['/medico',medico._id]"
+                                    
+                                    type="button" 
+                                    class="btn btn-primary">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                <!-- Si no hay médicos -->
+                <div class="alert alert-dark text-center" *ngIf="medicos.length === 0">
+                        <span>No hay registros</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

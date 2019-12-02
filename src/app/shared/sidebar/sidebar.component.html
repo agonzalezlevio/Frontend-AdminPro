@@ -12,12 +12,10 @@
 
                         <span class="hide-menu">{{usuario.nombre}}</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="/perfil" routerLinkActive="active">My Profile </a></li>
-                        <li><a href="javascript:void()">My Balance</a></li>
-                        <li><a href="javascript:void()">Inbox</a></li>
-                        <li><a routerLinkActive="active" routerLink="/account-setting">Account Setting</a></li>
+                        <li><a routerLink="/perfil" routerLinkActive="active">Mi perfil </a></li>
+                        <li><a routerLinkActive="active" routerLink="/account-setting">Ajustes de usuario</a></li>
                         <li><a href="javascript:void(0);" (click)="usuarioService.logout() " routerLinkActive="active"
-                                href="">Logout</a></li>
+                                href="">Cerrar Sesión</a></li>
                     </ul>
                 </li>
                 <li class="nav-devider"></li>

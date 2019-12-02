@@ -46,9 +46,18 @@
                 <li class="nav-item hidden-xs-down search-box"> <a
                         class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
                             class="ti-search"></i></a>
-                    <form class="app-search">
-                        <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i
-                                class="ti-close"></i></a> </form>
+                    <div class="app-search">
+                        <input 
+                        #input 
+                        (keyup.enter)="buscar(input.value)"
+
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Buscar & enter"> 
+                        <a class="srh-btn">
+                            <i class="ti-close"></i>
+                        </a> 
+                    </div>
                 </li>
 
                 <!-- ============================================================== -->
@@ -154,12 +163,10 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li><a routerLink="/perfil" routerLinkActive="active"><i class="ti-user"></i> Mi Perfil</a></li>
-                            <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                            <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                            <li><a href="#"><i class="ti-settings"></i> Ajustes de usuario</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a  href="javascript:void(0);" (click)="usuarioService.logout()" ><i class="fa fa-power-off"></i> Logout</a></li>
+                            <li><a  href="javascript:void(0);" (click)="usuarioService.logout()" ><i class="fa fa-power-off"></i> Cerrar Sesión</a></li>
                         </ul>
                     </div>
                 </li>
