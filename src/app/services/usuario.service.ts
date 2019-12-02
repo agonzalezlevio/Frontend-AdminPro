@@ -15,8 +15,14 @@ export class UsuarioService {
 
   public usuario: Usuario;
   public token: string;
+  public menu: any[] = [];
 
-  constructor(public http: HttpClient, public router: Router, public subirArchivoService: SubirArchivoService) {
+  constructor(
+    public http: HttpClient,
+    public router: Router,
+    public subirArchivoService: SubirArchivoService
+  ) {
+    // Se carga el storage al iniciar el servicio
     this.cargarStorage();
   }
 
@@ -24,23 +30,24 @@ export class UsuarioService {
     const URL = URL_SERVICIOS + '/login/google';
 
     return this.http.post(URL, { token }).pipe(map((respuesta: any) => {
-      this.guardarStorage(respuesta.id, respuesta.token, respuesta.usuario);
-
+      this.guardarStorage(respuesta.id, respuesta.token, respuesta.usuario, respuesta.menu);
       return true;
     }));
   }
 
   public estaLogeado() {
-      return ( this.token.length > 5);
+    return (this.token.length > 5);
   }
 
   public cargarStorage() {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
       this.usuario = JSON.parse(localStorage.getItem('usuario'));
+      this.menu = JSON.parse(localStorage.getItem('menu')); /* */
     } else {
       this.token = '';
       this.usuario = null;
+      this.menu = null;
     }
   }
 
@@ -50,12 +57,15 @@ export class UsuarioService {
     this.guardarStorage(id, this.token, this.usuario);
   }
 
-  public guardarStorage(id: string, token: string, usuario: Usuario) {
+  public guardarStorage(id: string, token: string, usuario: Usuario, menu?: any) {
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('usuario', JSON.stringify(usuario));
-
-
+    // Si el menu se añade como parámetro se inserta en el local storage y en el atributo del servicio
+    if (menu) {
+      localStorage.setItem('menu', JSON.stringify(menu));
+      this.menu = menu;
+    }
     this.usuario = usuario;
     this.token = token;
   }
@@ -63,8 +73,11 @@ export class UsuarioService {
 
   public logout() {
     this.usuario = null;
+    this.menu = null;
     this.token = '';
+
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
     localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
@@ -81,7 +94,7 @@ export class UsuarioService {
 
     return this.http.post(URL, usuario).pipe(map((respuesta: any) => {
 
-      this.guardarStorage(respuesta.id, respuesta.token, respuesta.usuario);
+      this.guardarStorage(respuesta.id, respuesta.token, respuesta.usuario, respuesta.menu);
 
       return true;
 
@@ -107,12 +120,12 @@ export class UsuarioService {
     let URL = URL_SERVICIOS + '/usuario/' + this.usuario._id;
     URL += `?token=${this.token}`;
 
-    return this.http.put(URL, usuario).pipe(map( (respuesta: any) => {
+    return this.http.put(URL, usuario).pipe(map((respuesta: any) => {
 
       // Si el usuario modificado es igual al que inicio sesión
       if (usuario._id === this.usuario._id) {
-          // Actualizar información storage
-          this.guardarStorage(respuesta._id, this.token, respuesta.usuario);
+        // Actualizar información storage
+        this.guardarStorage(respuesta._id, this.token, respuesta.usuario, this.menu);
       }
 
       // Notificación cambio exitoso
@@ -132,13 +145,13 @@ export class UsuarioService {
 
 
   public cambiarImagen(archivo: File, id: string) {
-    this.subirArchivoService.subirArchivo(archivo, 'usuarios', id).subscribe( (respuesta: any) => {
+    this.subirArchivoService.subirArchivo(archivo, 'usuarios', id).subscribe((respuesta: any) => {
       this.usuario.img = respuesta.usuario.img;
 
       // Actualizar información storage
-      this.guardarStorage(id, this.token, this.usuario);
+      this.guardarStorage(id, this.token, this.usuario, this.menu);
 
-       // Notificación cambio exitoso
+      // Notificación cambio exitoso
       Swal.fire({
         title: 'Imagen Actualizada',
         text: respuesta.usuario.nombre,

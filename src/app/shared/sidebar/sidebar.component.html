@@ -20,12 +20,14 @@
                 </li>
                 <li class="nav-devider"></li>
                 <li class="nav-small-cap">PERSONAL</li>
+
                 <li *ngFor="let menu of sidebarService.menu">
                     <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
-                        <i [class]="menu.icono">
-                        </i>
-                        <span class="hide-menu">{{menu.titulo}} <span
-                                class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span></span></a>
+                        <i [class]="menu.icono"></i>
+                        <span class="hide-menu">{{menu.titulo}}
+                            <span class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span>
+                        </span>
+                    </a>
                     <ul aria-expanded="false" class="collapse">
                         <li>
                             <a *ngFor="let submenu of menu.submenu" routerLinkActive="active"
@@ -33,6 +35,7 @@
                         </li>
                     </ul>
                 </li>
+
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
