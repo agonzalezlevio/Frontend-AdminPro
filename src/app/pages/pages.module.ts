@@ -38,16 +38,18 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
 
 @NgModule({
     declarations: [
+        // PagesComponent,
         DashboardComponent,
         ProgressComponent,
-        PagesComponent,
         Graficas1Component,
-        IncrementadorComponent, // temporal
-        GraficoDonaComponent, AccountSettingsComponent, PromesasComponent,
+        IncrementadorComponent,
+        GraficoDonaComponent,
+        AccountSettingsComponent,
+        PromesasComponent,
         RxjsComponent,
         ProfileComponent,
         UsuariosComponent,
-        ModalUploadComponent,
+        // ModalUploadComponent,
         HospitalesComponent,
         MedicosComponent,
         MedicoComponent,
@@ -56,7 +58,7 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
     exports: [
         DashboardComponent,
         ProgressComponent,
-        PagesComponent,
+        // PagesComponent,
         Graficas1Component
     ],
     imports: [

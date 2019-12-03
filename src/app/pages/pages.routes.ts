@@ -18,11 +18,6 @@ import { LoginGuard } from '../services/guards/login.guard';
 import { AdminGuard } from '../services/guards/admin.guard';
 
 const pageRoutes: Routes = [
-  {
-    path: '',
-    component: PagesComponent,
-    canActivate: [LoginGuard],
-    children: [
       { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
       { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' } },
       { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
@@ -44,9 +39,6 @@ const pageRoutes: Routes = [
       { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimiento de médicos' } },
       { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Actualizar médico' } },
       { path: '', pathMatch: 'full', redirectTo: '/dashboard' }
-
-    ]
-  }
 ];
 
 

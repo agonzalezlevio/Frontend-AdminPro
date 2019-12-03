@@ -16,6 +16,8 @@ import { RegisterComponent } from './login/register.component';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PagesComponent } from './pages/pages.component';
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -26,14 +28,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     RegisterComponent,
     LoginComponent,
+    PagesComponent
   ],
   imports: [
     BrowserModule,
     APP_ROUTES,
-    PagesModule,
+    // PagesModule, //Forma estática
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule // Temporal para component
+    FormsModule, // Temporal para component
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
