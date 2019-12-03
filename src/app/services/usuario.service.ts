@@ -8,7 +8,6 @@ import { catchError  } from 'rxjs/internal/operators/catchError';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from './subir-archivo.service';
-import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
 
 
@@ -29,6 +28,26 @@ export class UsuarioService {
     // Se carga el storage al iniciar el servicio
     this.cargarStorage();
   }
+
+  public renuevaToken() {
+    let URL = URL_SERVICIOS + '/login/renuevatoken';
+    URL += `?token=${this.token}`;
+
+    return this.http.get(URL).pipe(map( (respuesta: any) => {
+      // Actualización token
+      this.token = respuesta.token;
+      localStorage.setItem('token', this.token);
+      return true;
+    }), catchError(error => {
+      Swal.fire('No se pudo renovar el token', 'Debe volver a iniciar sesión', 'error');
+      this.router.navigate(['/login']);
+      return throwError(error);
+    }));
+
+  }
+
+
+
 
   public loginGoogle(token: string) {
     const URL = URL_SERVICIOS + '/login/google';

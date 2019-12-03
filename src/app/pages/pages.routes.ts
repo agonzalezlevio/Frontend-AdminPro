@@ -14,11 +14,16 @@ import { MedicosComponent } from './medicos/medicos.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 
 // Guards
-import { LoginGuard } from '../services/guards/login.guard';
 import { AdminGuard } from '../services/guards/admin.guard';
+import { VerificatokenGuard } from '../services/guards/verificatoken.guard';
 
 const pageRoutes: Routes = [
-      { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+      { 
+        path: 'dashboard',
+        component: DashboardComponent,
+        // canActivate: [VerificatokenGuard],
+        data: { titulo: 'Dashboard' }
+      },
       { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' } },
       { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
       { path: 'account-setting', component: AccountSettingsComponent, data: { titulo: 'Ajustes de usuario' } },
