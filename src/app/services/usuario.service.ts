@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../config/config';
-import { map } from 'rxjs/internal/operators/map';
+import { map  } from 'rxjs/internal/operators/map';
+import { catchError  } from 'rxjs/internal/operators/catchError';
+
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from './subir-archivo.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 
 @Injectable({
@@ -92,13 +96,21 @@ export class UsuarioService {
       localStorage.removeItem('email');
     }
 
-    return this.http.post(URL, usuario).pipe(map((respuesta: any) => {
+    return this.http.post(URL, usuario).pipe(
+      map((respuesta: any) => {
 
       this.guardarStorage(respuesta.id, respuesta.token, respuesta.usuario, respuesta.menu);
 
       return true;
 
-    }));
+    }),
+      catchError( respuestaError => {
+        const respuesta = respuestaError.error;
+
+        Swal.fire('Error al iniciar sesión', respuesta.mensaje, 'error');
+        return throwError(respuestaError);
+      })
+    );
   }
 
   public crearUsuario(usuario: Usuario) {
@@ -112,7 +124,18 @@ export class UsuarioService {
         confirmButtonText: 'Aceptar'
       });
       return respuesta.usuario;
-    }));
+    }),
+    catchError( respuestaError => {
+
+      const respuesta = respuestaError.error;
+      // Se hace un parse al mensaje para mostrar el error concreto
+      let cutMessage = (respuesta.errors.message) as string;
+      cutMessage = cutMessage.slice(cutMessage.lastIndexOf(':') + 1, cutMessage.length);
+
+      Swal.fire( respuesta.mensaje, cutMessage, 'error');
+      return throwError(respuestaError);
+    })
+    );
   }
 
   public actualizarUsuario(usuario: Usuario) {
@@ -136,8 +159,19 @@ export class UsuarioService {
         confirmButtonText: 'Aceptar'
       });
 
+      console.log(respuesta)
 
       return true;
+    }),
+    catchError( respuestaError => {
+
+      const respuesta = respuestaError.error;
+      // Se hace un parse al mensaje para mostrar el error concreto
+      let cutMessage = (respuesta.errors.message) as string;
+      cutMessage = cutMessage.slice(cutMessage.lastIndexOf(':') + 1, cutMessage.length);
+
+      Swal.fire( respuesta.mensaje, cutMessage, 'error');
+      return throwError(respuestaError);
     }));
   }
 
